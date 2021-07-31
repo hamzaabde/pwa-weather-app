@@ -9,9 +9,17 @@
     "snowpack": "^3.3.7"
   },
   "dependencies": {
+    "@reduxjs/toolkit": "^1.6.1",
     "bootstrap": "^5.0.2",
+    "bootstrap-icons": "^1.5.0",
+    "d3-scale": "^4.0.0",
+    "d3-shape": "^3.0.1",
+    "date-fns": "^2.23.0",
+    "openweather-apis": "^4.4.1",
     "react": "^17.0.2",
     "react-animated-weather": "^4.0.1",
-    "react-dom": "^17.0.2"
+    "react-dom": "^17.0.2",
+    "react-icons": "^4.2.0",
+    "react-redux": "^7.2.4"
   }
 }

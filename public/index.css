@@ -1,4 +1,63 @@
-/* Add CSS styles here! */
-body {
-  font-family: sans-serif;
+/* app */
+.app {
+    /* background-color: rgb(205, 234, 253); */
+}
+
+/* graph styles */
+.x-axis-value {
+    font-size: 0.7rem;
+    font-weight: bold;
+    transform-origin: bottom;
+}
+
+.band {
+    transform-origin: bottom;
+}
+
+@media (min-width: 320px) {
+    .x-axis-value {
+        font-size: calc(0.7rem + 6 * ((100vw - 320px) / 680));
+    }
+}
+
+@media (min-width: 1200px) {
+    .x-axis-value {
+        font-size: 1.2rem;
+    }
+}
+
+/* footer */
+.accuweather-logo {
+    max-width: 110px;
+}
+
+.footer {
+    opacity: 0.6;
+}
+
+.update-info {
+    font-size: 0.8rem;
+}
+
+.spinner {
+    width: 0.8rem;
+    height: 0.8rem;
+    border-width: 2px;
+    margin: 2px;
+}
+
+.arrow-clockwise {
+    width: 1.1rem;
+}
+
+@media (min-width: 768px) {
+    .footer-info {
+        font-size: 1.2rem;
+    }
+
+    .footer-spinner {
+        width: 1.5rem;
+        height: 1.5rem;
+        border-width: 2px;
+    }
 }
