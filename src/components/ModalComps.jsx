@@ -171,13 +171,11 @@ export const AddCity = ({ active, setActive }) => {
             // setLocations(null)
             setError(null)
             setLoading(true)
-            console.log('searching ', value)
             if (value)
                 searchLocations(value)
                     .then(locs => {
                         setLoading(false)
                         setLocations(locs)
-                        console.log(locs)
                     })
                     .catch(err => {
                         setLoading(false)

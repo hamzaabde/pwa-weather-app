@@ -25,8 +25,6 @@ export const useVariableDimensions = () => {
     })
 
     useEffect(() => {
-        console.log('resize')
-
         if (innerWidth < 576) {
             setWidth(innerWidth - 24)
             setHeight(150)
@@ -43,11 +41,14 @@ export const useVariableDimensions = () => {
             setWidth((innerWidth * 6) / 12 - 24)
             setHeight(210)
         }
-        if (innerWidth < 1400 && innerWidth >= 1200)
+        if (innerWidth < 1400 && innerWidth >= 1200) {
             setWidth((innerWidth * 6) / 12 - 24)
-    }, [width])
+            setHeight(230)
+        }
+    }, [])
 
     onresize = useCallback(() => {
+        // console.log('resize')
         if (innerWidth < 576) {
             setWidth(innerWidth - 24)
             setHeight(150)
@@ -64,9 +65,11 @@ export const useVariableDimensions = () => {
             setWidth((innerWidth * 6) / 12 - 24)
             setHeight(210)
         }
-        if (innerWidth < 1400 && innerWidth >= 1200)
+        if (innerWidth < 1400 && innerWidth >= 1200) {
             setWidth((innerWidth * 6) / 12 - 24)
-    }, [])
+            setHeight(230)
+        }
+    }, [innerWidth])
 
     return { width, height, margin }
 }

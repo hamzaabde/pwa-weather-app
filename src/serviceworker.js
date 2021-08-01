@@ -1,8 +1,9 @@
-var staticCacheName = 'Weatherry'
+const staticCacheName = 'assets-'
+let version = 1
 
 self.addEventListener('install', function (e) {
     e.waitUntil(
-        caches.open(staticCacheName).then(function (cache) {
+        caches.open(staticCacheName + version).then(function (cache) {
             return cache.addAll(['/'])
         })
     )

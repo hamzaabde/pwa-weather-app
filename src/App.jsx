@@ -5,24 +5,34 @@ import Alert from './components/Alert'
 import Footer from './components/Footer'
 import register from './register-sw'
 
+// service worker
+register()
+
 // hooks
 import { useAppInit } from './hooks/appUtils'
 import { useVariableHeight } from './hooks/size'
+import { useConstantCache } from './hooks/cache'
 
 // redux
-import { useSelector } from 'react-redux'
+import { useSelector, useStore } from 'react-redux'
 
 // bootstrap
 import 'bootstrap/dist/css/bootstrap.min.css'
 import '/index.css'
 
 const App = () => {
-    const reload = useAppInit()
+    useAppInit()
+    useConstantCache('weather-store-cache', useStore().getState())
+
+    // dynamic height
     const height = useVariableHeight('london')
+
+    // theme
+    const theme = useSelector(state => state.theme.value)
 
     return (
         <div
-            className="app container-fluid"
+            className={`app container-fluid ${theme}`}
             style={{
                 height: height,
             }}
@@ -31,7 +41,7 @@ const App = () => {
                 <Nav />
                 <Main />
                 <Alert />
-                <Footer reload={reload} />
+                <Footer />
             </div>
         </div>
     )

@@ -5,10 +5,6 @@ import Tab from './Tab'
 // hooks
 import { useWeather } from '../hooks/appUtils'
 
-// redux
-import { useSelector, useDispatch } from 'react-redux'
-import { emitError } from '../storeReducers'
-
 const Main = () => {
     const {
         city,
@@ -17,7 +13,6 @@ const Main = () => {
         dailyWeather,
         isSuccess,
         loading,
-        error,
     } = useWeather()
 
     return (
@@ -30,12 +25,7 @@ const Main = () => {
                         height: '2rem',
                     }}
                 />
-            ) : error ? (
-                <>
-                    <Status error={error} />
-                    <Tab error={error} />
-                </>
-            ) : isSuccess ? (
+            ) : isSuccess && !loading ? (
                 <>
                     <Status name={city.name} data={currentWeather} />
                     <Tab

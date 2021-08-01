@@ -3,16 +3,19 @@ import { BsArrowClockwise } from 'react-icons/bs'
 import { format } from 'date-fns'
 
 // redux
-import { useSelector } from 'react-redux'
+import { useSelector, useDispatch } from 'react-redux'
+import { reload, emitError } from '../storeReducers'
 
-const Footer = ({ reload }) => {
+const Footer = () => {
     const [loading, setLoading] = useState(false)
     const [time, setTime] = useState(new Date())
 
-    const error = useSelector(state => state.error.value)
+    const dispatch = useDispatch()
+    const city = useSelector(state => state.selectedCity.value)
+    useEffect(() => {}, [])
 
     useEffect(() => {
-        if (loading && !error) {
+        if (loading) {
             setTime(new Date())
             setLoading(false)
         }
@@ -26,7 +29,12 @@ const Footer = ({ reload }) => {
 
     const onClick = useCallback(() => {
         setLoading(!loading)
-        reload()
+        if (city.key) {
+            dispatch(emitError(null))
+            dispatch(reload())
+        } else {
+            dispatch(emitError('Reload failed'))
+        }
     }, [loading])
 
     return (

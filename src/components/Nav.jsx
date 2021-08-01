@@ -9,35 +9,42 @@ const Nav = () => {
 
     return (
         <nav className="row justify-content-center align-items-center py-2">
-            <h1 className="col col-sm-5 col-md-4 mb-0 text-start text-primary fs-4 fw-normal fst-italic">
-                Weathery
-            </h1>
+            <div className="col col-sm-5 col-md-4 mb-0 d-flex align-items-center">
+                <img
+                    className="img"
+                    style={{ width: '2rem' }}
+                    src="/images/logo.svg"
+                />
+                <h1 className="logo-text text-primary fs-6 ms-1 mb-0">
+                    Weatherry
+                </h1>
+            </div>
             <div className="col col-sm-5 col-md-4 text-end fs-6">
                 <div className="btn-group">
                     <button
-                        className="btn btn-xs btn-light"
+                        className="nav-btn btn btn-xs"
                         type="button"
                         onClick={() => setAddCityModal(true)}
                     >
                         Add
                     </button>
                     <button
-                        className="btn btn-xs btn-light"
+                        className="nav-btn btn btn-xs align-middle"
                         type="button"
                         onClick={() => setCityModal(true)}
                     >
                         Cities
                     </button>
-                    <button
-                        className="btn btn-xs btn-light"
+                    <span
+                        className="nav-btn btn btn-xs align-middle"
                         type="button"
                         onClick={() => setSettingsModal(true)}
                     >
-                        <BsGear className="" />
+                        <BsGear className="d-md-none" />
                         <span className="align-middle d-md-inline d-none ms-1">
                             Settings
                         </span>
-                    </button>
+                    </span>
                 </div>
             </div>
             <AddCity active={addCityModal} setActive={setAddCityModal} />

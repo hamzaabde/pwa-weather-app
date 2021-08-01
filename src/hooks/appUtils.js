@@ -11,26 +11,20 @@ import {
 
 // redux
 import { useDispatch, useSelector } from 'react-redux'
-import {
-    addCity,
-    selectCity,
-    selectUnit,
-    emitError,
-    clearError,
-} from '../storeReducers'
-import { current } from '@reduxjs/toolkit'
+import { addCity, selectCity, emitError, clearError } from '../storeReducers'
 
 export const useAppInit = () => {
     const [userLocation, setUserLocation] = useState(null)
     const [isSuccess, setIsSuccess] = useState(false)
-    const [reload, setReload] = useState(0)
 
     const cities = useSelector(state => state.cities.value)
+    const city = useSelector(state => state.selectedCity.value)
     const dispatch = useDispatch()
 
     useEffect(() => {
         if (userLocation === null) {
             // fetch users location
+            dispatch(clearError())
             getUserLocation()
                 .then(geo => {
                     // console.log('geo:', geo)
@@ -39,30 +33,19 @@ export const useAppInit = () => {
                 .then(location => {
                     setUserLocation(location)
                     setIsSuccess(true)
-                    // console.table(location)
                     dispatch(addCity(location))
                     dispatch(clearError())
                 })
                 .catch(e => {
-                    dispatch(emitError(e))
-                    // console.warn(e)
+                    dispatch(emitError(e.message))
+                    console.warn(e)
                 })
         }
 
-        if (isSuccess) {
-            dispatch(selectUnit('Metric'))
+        if (isSuccess && !city) {
             dispatch(selectCity(cities[0]))
-            // console.table(cities)
         }
-    }, [reload, isSuccess, cities])
-
-    // ✅ success - indicates successfull location fetch
-    // ❌ success - indicates location fetch failure
-    // error - error bucket
-    // reload - manual reload handle
-    return () => {
-        setReload(reload + 1)
-    }
+    }, [isSuccess, cities])
 }
 
 export const useWeather = () => {
@@ -70,16 +53,18 @@ export const useWeather = () => {
     const [hourlyWeather, setHourlyWeather] = useState(null)
     const [dailyWeather, setDailyWeather] = useState(null)
     const [loading, setLoading] = useState(false)
-    const [error, setError] = useState(null)
     const [isSuccess, setIsSuccess] = useState(false)
 
     const city = useSelector(state => state.selectedCity.value)
     const unit = useSelector(state => state.selectedUnit.value)
+    const reload = useSelector(state => state.reload.value)
+
+    const dispatch = useDispatch()
 
     useEffect(() => {
         if (city && unit) {
             setLoading(true)
-            setError(null)
+            dispatch(clearError())
             fetchCurrentCondition(city.key, unit)
                 .then(data => {
                     setCurrentWeather(data)
@@ -96,10 +81,11 @@ export const useWeather = () => {
                 })
                 .catch(e => {
                     setLoading(false)
-                    setError(e.message)
+                    dispatch(emitError(e.message))
+                    console.warn(e)
                 })
         }
-    }, [city, unit])
+    }, [city, unit, reload])
 
     return {
         city,
@@ -108,6 +94,5 @@ export const useWeather = () => {
         dailyWeather,
         isSuccess,
         loading,
-        error,
     }
 }

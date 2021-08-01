@@ -57,10 +57,10 @@ export const searchLocations = str => {
                 return res.json()
             })
             .then(data => {
-                console.log(data)
+                if (data.Code) throw new Error('API_KEY quota exceeded.')
+
                 if (!data.length)
                     throw new Error(`Didn't find anything named ${str}`)
-                console.log(data)
 
                 const temp = data.reduce(
                     (arr, city) => [
@@ -101,10 +101,13 @@ export const fetchLocationByGeo = ({ lat, lon }) => {
                 return res.json()
             })
             .then(data => {
+                if (data.Code) throw new Error('API_KEY quota exceeded.')
+
                 if (!data.Key)
                     throw new Error(
                         `Didn't find anything for: lat(${lat}) and long(${lon})`
                     )
+
                 resolve({
                     name: data.LocalizedName,
                     country: data.Country.LocalizedName,
@@ -140,6 +143,7 @@ export const fetchCurrentCondition = (key, unit = 'Metric') => {
                 return res.json()
             })
             .then(data => {
+                if (data.Code) throw new Error('API_KEY quota exceeded.')
                 if (!data.length) throw new Error('Data not found')
 
                 const temp = data[0]
@@ -150,6 +154,7 @@ export const fetchCurrentCondition = (key, unit = 'Metric') => {
                             : Math.round(temp.Temperature.Imperial.Value) + '℉',
                     icon: temp.WeatherIcon,
                     condition: temp.WeatherText,
+                    isDay: temp.IsDayTime,
                 }
 
                 // resolve refined data
@@ -188,6 +193,7 @@ export const fetchHourlyForecast = (key, unit = 'Metric') => {
                 return res.json()
             })
             .then(data => {
+                if (data.Code) throw new Error('API_KEY quota exceeded.')
                 if (!data.length) throw new Error('Data not found')
 
                 // map over data and return necessary data
@@ -234,6 +240,7 @@ export const fetchDailyForecast = (key, unit = 'Metric') => {
         )
             .then(res => {
                 clearTimeout(id)
+                console.log('response', res)
                 if (!res.ok || res.status !== 200)
                     throw new Error(res.statusText)
 
@@ -263,7 +270,10 @@ export const fetchDailyForecast = (key, unit = 'Metric') => {
                     return {
                         icon: { day: d.Day.Icon, night: d.Night.Icon },
                         date: format(new Date(d.Date), 'ccc'),
-                        temperature: { maxTemp, minTemp },
+                        temperature: {
+                            maxTemp: Math.round(maxTemp),
+                            minTemp: Math.round(minTemp),
+                        },
                     }
                 })
 

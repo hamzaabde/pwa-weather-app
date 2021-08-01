@@ -1,10 +1,11 @@
 import { createSlice } from '@reduxjs/toolkit'
+import { getFromStorage } from './hooks/cache'
 
 // create store slices
 const citiesSlice = createSlice({
     name: 'cities',
     initialState: {
-        value: [],
+        value: getFromStorage('cities', [], 'weather-store-cache'),
     },
     reducers: {
         addCity: (state, action) => {
@@ -31,7 +32,7 @@ const citiesSlice = createSlice({
 const selectedCitySlice = createSlice({
     name: 'selected-city',
     initialState: {
-        value: null,
+        value: getFromStorage('selectedCity', null, 'weather-store-cache'),
     },
     reducers: {
         selectCity: (state, action) => {
@@ -43,11 +44,39 @@ const selectedCitySlice = createSlice({
 const selectedUnitSlice = createSlice({
     name: 'selected-unit',
     initialState: {
-        value: 'Metric',
+        value: getFromStorage('selectedUnit', 'Metric', 'weather-store-cache'),
     },
     reducers: {
         selectUnit: (state, action) => {
             state.value = action.payload
+        },
+    },
+})
+
+const themeSlice = createSlice({
+    name: 'theme',
+    initialState: {
+        value: getFromStorage(
+            'theme',
+            'day-clear-theme',
+            'weather-store-cache'
+        ),
+    },
+    reducers: {
+        changeTheme: (state, action) => {
+            state.value = action.payload
+        },
+    },
+})
+
+const reloadSlice = createSlice({
+    name: 'reload',
+    initialState: {
+        value: 0,
+    },
+    reducers: {
+        reload: state => {
+            state.value += 1
         },
     },
 })
@@ -71,10 +100,14 @@ const errorSlice = createSlice({
 export const { addCity, removeCity } = citiesSlice.actions
 export const { selectCity } = selectedCitySlice.actions
 export const { selectUnit } = selectedUnitSlice.actions
+export const { changeTheme } = themeSlice.actions
+export const { reload } = reloadSlice.actions
 export const { emitError, clearError } = errorSlice.actions
 
 // export store reducers
 export const citiesSliceReducer = citiesSlice.reducer
 export const selectedCitySliceReducer = selectedCitySlice.reducer
 export const selectedUnitSliceReducer = selectedUnitSlice.reducer
+export const themeSliceReducer = themeSlice.reducer
+export const reloadSliceReducer = reloadSlice.reducer
 export const errorSliceReducer = errorSlice.reducer

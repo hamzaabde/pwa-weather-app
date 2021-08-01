@@ -3,6 +3,8 @@ import {
     citiesSliceReducer,
     selectedCitySliceReducer,
     selectedUnitSliceReducer,
+    themeSliceReducer,
+    reloadSliceReducer,
     errorSliceReducer,
 } from './storeReducers'
 
@@ -12,6 +14,8 @@ export default configureStore({
         cities: citiesSliceReducer,
         selectedCity: selectedCitySliceReducer,
         selectedUnit: selectedUnitSliceReducer,
+        theme: themeSliceReducer,
+        reload: reloadSliceReducer,
         error: errorSliceReducer,
     },
 })

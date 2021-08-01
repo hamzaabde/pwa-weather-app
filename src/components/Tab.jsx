@@ -1,9 +1,12 @@
 import React, { useState, useCallback } from 'react'
 import LineGraph from './Graphs'
+import { format } from 'date-fns'
 
 const TabBtn = ({ children, active, setActive }) => (
     <button
-        className={`nav-link p-1 ${active == children ? 'active' : null}`}
+        className={`nav-link p-1 fs-6 tab-btn ${
+            active == children ? 'active' : null
+        }`}
         onClick={() => setActive(children)}
     >
         {children}
@@ -15,15 +18,16 @@ const TabPane = ({ children, active, toggler }) => {
     return <div className={`tab-pane fade ${toggle}`}>{children}</div>
 }
 
-const Tab = ({ data, error }) => {
+const Tab = ({ data }) => {
     const [active, setActive] = useState('HOURLY')
 
     return (
         <div className="tab col-12 col-sm-10 col-md-8 col-lg-6">
             <div className="row justify-content-start">
                 <div className="col-12">
-                    <span className="fw-normal">Sun, July 25</span>
-                    <span className="fw-light ms-3">25° / 18°</span>
+                    <span className="text-light fs-6 fw-normal">
+                        {format(new Date(), 'ccc, LLLL d')}
+                    </span>
                 </div>
             </div>
             <div className="tab-container py-2 border-top border-bottom">
@@ -37,18 +41,10 @@ const Tab = ({ data, error }) => {
                 </div>
                 <div className="tab-content">
                     <TabPane active={active} toggler="HOURLY">
-                        {error ? (
-                            <h1 className="text-danger fs-3">{error}</h1>
-                        ) : (
-                            <LineGraph data={data.hourly} type="hourly" />
-                        )}
+                        <LineGraph data={data.hourly} type="hourly" />
                     </TabPane>
                     <TabPane active={active} toggler="DAILY">
-                        {error ? (
-                            <h1 className="text-danger fs-3">{error}</h1>
-                        ) : (
-                            <LineGraph data={data.daily} type="daily" />
-                        )}
+                        <LineGraph data={data.daily} type="daily" />
                     </TabPane>
                 </div>
             </div>

@@ -1,13 +1,92 @@
-/* app */
-.app {
-    /* background-color: rgb(205, 234, 253); */
+/* app theme classes */
+.day-clear-theme {
+    background: #54cbf2;
+    /* background: -webkit-linear-gradient(to top, #3182ed, #54cbf2); */
+    background: linear-gradient(to top, #3182ed, #54cbf2);
+}
+
+.day-cloudy-theme {
+    background: hsl(195, 55%, 69%);
+    background: -webkit-linear-gradient(
+        to top,
+        hsl(214, 48%, 54%),
+        hsl(195, 55%, 69%)
+    );
+    background: linear-gradient(to top, hsl(214, 48%, 54%), hsl(195, 55%, 69%));
+}
+
+.night-clear-theme {
+    background: hsl(218, 12%, 19%);
+    background: -webkit-linear-gradient(
+        to top,
+        hsl(217, 73%, 47%),
+        hsl(216, 7%, 14%)
+    );
+    background: linear-gradient(to top, hsl(217, 73%, 47%), hsl(218, 12%, 19%));
+}
+
+.night-cloudy-theme {
+    background: hsl(219, 9%, 31%);
+    background: -webkit-linear-gradient(
+        to top,
+        hsl(217, 31%, 53%),
+        hsl(219, 9%, 31%)
+    );
+    background: linear-gradient(to top, hsl(217, 31%, 53%), hsl(219, 9%, 31%));
+}
+
+@media (min-width: 992px) {
+    .status h1 {
+        font-size: 1.1rem !important;
+    }
+}
+
+/* nav */
+#logo-text {
+    color: rgb(81, 84, 255);
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.nav-btn {
+    color: hsl(0, 0%, 93%);
+    font-size: 0.8rem;
+}
+
+.tab-btn {
+    background-color: hsla(0, 0%, 89%, 0.109) !important;
+    color: rgba(255, 255, 255, 0.63);
+}
+
+.tab-btn.active {
+    color: white !important;
 }
 
 /* graph styles */
+text {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.marks circle {
+    fill: white;
+}
+
+.graph-lines line {
+    stroke: white;
+}
+
+.line {
+    stroke: hsla(0, 0%, 100%, 0.281);
+    stroke-width: 2px;
+}
+
 .x-axis-value {
+    fill: white;
     font-size: 0.7rem;
-    font-weight: bold;
-    transform-origin: bottom;
+    font-weight: 500;
+}
+
+.mark-y-value {
+    fill: rgb(236, 236, 253);
 }
 
 .band {
@@ -29,6 +108,7 @@
 /* footer */
 .accuweather-logo {
     max-width: 110px;
+    opacity: 0.6;
 }
 
 .footer {
@@ -36,10 +116,12 @@
 }
 
 .update-info {
+    color: white;
     font-size: 0.8rem;
 }
 
 .spinner {
+    color: white;
     width: 0.8rem;
     height: 0.8rem;
     border-width: 2px;
@@ -47,6 +129,7 @@
 }
 
 .arrow-clockwise {
+    color: white;
     width: 1.1rem;
 }
 
